@@ -3,6 +3,10 @@
  */
 package com.mohamedatta.examinly.service;
 
+
+import com.mohamedatta.examinly.model.Token;
+import com.mohamedatta.examinly.model.User;
+
 /**
  * @author Mohamed Atta
  *
@@ -25,6 +29,7 @@ public interface AuthenticationService {
  * @return true or false
  */
 	Boolean IsAuthorized(String Token);
+	Token generateToken(User user);
 	
 	
 	

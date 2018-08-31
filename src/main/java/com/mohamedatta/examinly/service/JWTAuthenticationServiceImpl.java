@@ -4,12 +4,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.Device;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.mohamedatta.examinly.model.Token;
+import com.mohamedatta.examinly.model.User;
 import com.mohamedatta.examinly.security.SecurityUser;
 
 import io.jsonwebtoken.Claims;
@@ -20,6 +23,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Service
 @Qualifier(value="jwt")
 public class JWTAuthenticationServiceImpl implements AuthenticationService{
+	@Autowired
+	UserDetailsServiceImpl userDetailsService;
 
 	@Override
 	public String IsAuthorized(String Email, String Password) {
@@ -135,10 +140,10 @@ public class JWTAuthenticationServiceImpl implements AuthenticationService{
 	    return (this.AUDIENCE_TABLET.equals(audience) || this.AUDIENCE_MOBILE.equals(audience));
 	  }
 
-	  public String generateToken(UserDetails userDetails, Device device) {
+	  public String generateToken(UserDetails userDetails) {
 	    Map<String, Object> claims = new HashMap<String, Object>();
 	    claims.put("sub", userDetails.getUsername());
-	    claims.put("audience", this.generateAudience(device));
+	    claims.put("audience", AUDIENCE_WEB);
 	    claims.put("created", this.generateCurrentDate());
 	    return this.generateToken(claims);
 	  }
@@ -175,4 +180,15 @@ public class JWTAuthenticationServiceImpl implements AuthenticationService{
 	    final Date expiration = this.getExpirationDateFromToken(token);
 	    return (username.equals(user.getUsername()) && !(this.isTokenExpired(token)) && !(this.isCreatedBeforeLastPasswordReset(created, user.getLastPasswordReset())));
 	  }
+
+	@Override
+	public Token generateToken(User user) {
+		// TODO Auto-generated method stub
+		UserDetails userDetails = userDetailsService.create(user);
+		Token t = new Token();
+		t.setToken(generateToken(userDetails));
+		
+		return  t;
+		
+	}
 }

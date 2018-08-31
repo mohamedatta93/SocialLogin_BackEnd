@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class })
-@ComponentScan(basePackages= {"com.mohamedatta.examinly.model","com.mohamedatta.examinly.controllers"})
+//@ComponentScan(basePackages= {"com.mohamedatta.examinly","com.mohamedatta.examinly.model","com.mohamedatta.examinly.controllers"})
 public class ExaminlyApplication {
 
 	public static void main(String[] args) {

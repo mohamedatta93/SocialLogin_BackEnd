@@ -1,5 +1,7 @@
 package com.mohamedatta.examinly.model;
 
+import org.springframework.stereotype.Component;
+
 public class ResponseError {
 
 	Integer code;

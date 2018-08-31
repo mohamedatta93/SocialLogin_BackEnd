@@ -5,31 +5,43 @@ package com.mohamedatta.examinly.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+
 /**
  * @author Mohamed Atta
  *
  */
+@Entity
 public class User {
-
-	private Integer ID;
+    @Id
+    @GeneratedValue
+   	private Long ID;
 	private String name;
 	private String userName;
 	private String email;
 	private Date birthDate;
 	private String Password;
 	private String provider;
+
+	//@OneToOne(mappedBy="user",cascade = CascadeType.ALL)
+	@Transient
 	private Token currentToken;
 	private String profileImgPath;
 	/**
 	 * @return the iD
 	 */
-	public Integer getID() {
+	public Long getID() {
 		return ID;
 	}
 	/**
 	 * @param iD the iD to set
 	 */
-	public void setID(Integer iD) {
+	public void setID(Long iD) {
 		ID = iD;
 	}
 	/**
